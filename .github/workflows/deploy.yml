@@ -30,5 +30,6 @@ jobs:
         location: australiaeast
         acrUsername: ${{ secrets.ACR_USERNAME }}
         acrPassword: ${{ secrets.ACR_PASSWORD }}
+        targetPort: 8000                 # <-- This forces Azure to route web traffic to your FastAPI 8000 port
         ingress: external
         environmentVariables: DATABASE_URL=${{ secrets.DATABASE_URL }}
