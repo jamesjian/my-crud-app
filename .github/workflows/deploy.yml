@@ -32,5 +32,11 @@ jobs:
         acrPassword: ${{ secrets.ACR_PASSWORD }}
         ingress: external
         targetPort: 8000                 # <-- This forces Azure to route web traffic to your FastAPI 8000 port
-        environmentVariables: >-
-          DATABASE_URL="postgresql://clouduser:SimpleAzurePassword2026@://azure.com"
+        containerAppSecrets: |
+          [
+            {
+              "name": "db-connection-secret",
+              "value": "postgresql://clouduser:SimpleAzurePassword2026@://azure.com"
+            }
+          ]
+        environmentVariables: DATABASE_URL=secretref:db-connection-secret
