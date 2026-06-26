@@ -2,7 +2,7 @@ name: Deploy FastAPI to Azure
 
 on:
   push:
-    branches: [ main ]  # Triggers the pipeline every time you push to the main branch
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
@@ -20,5 +20,11 @@ jobs:
       uses: azure/container-apps-deploy-action@v1
       with:
         appSourcePath: ${{ github.workspace }}
+        #registry name
+        acrName: mycrudapp        
         containerAppName: my-toy-crud-app
         resourceGroup: my-free-tier-rg
+            # Tell Azure how to name the image inside your registry:
+        imageToBuild: mycrudapp.azurecr.io/my-toy-crud-app:${{ github.sha }}
+        # Set a deployment location (e.g. eastus, westeurope, australiaeast)
+        location: Australia Southeast
