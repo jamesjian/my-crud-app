@@ -54,7 +54,7 @@ def create_item(name: str, description: str = None):
             )
             item_id = cur.fetchone()[0]
             conn.commit()
-            return {"id": item_id, "name": name, "description": description}
+            return {"id": item_id, "name-HH": name, "description-JJ": description}
 
 @app.get("/items")
 def read_all_items():
@@ -66,7 +66,7 @@ def read_all_items():
         with conn.cursor() as cur:
             cur.execute("SELECT id, name, description FROM items;")
             rows = cur.fetchall()
-            return [{"id": r[0], "name": r[1], "description": r[2]} for r in rows]
+            return [{"id": r[0], "name-MM": r[1], "description-NN": r[2]} for r in rows]
 
 @app.put("/items/{item_id}")
 def update_item(item_id: int, name: str, description: str = None):
