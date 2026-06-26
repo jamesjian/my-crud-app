@@ -4,7 +4,8 @@ import time
 from fastapi import FastAPI, HTTPException
 import psycopg
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+# 1. Look for standard variable first; if empty, look for the native Azure secret reference key
+DATABASE_URL = os.getenv("DATABASE_URL") or os.getenv("DATABASE_URL_SECRET")
 
 @contextlib.asynccontextmanager
 async def lifespan(app: FastAPI):
