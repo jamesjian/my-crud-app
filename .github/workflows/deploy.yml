@@ -28,3 +28,6 @@ jobs:
         imageToBuild: mycrudapp.azurecr.io/my-toy-crud-app:${{ github.sha }}
         # Set a deployment location (e.g. eastus, westeurope, australiaeast)
         location: australiaeast
+        acrUsername: ${{ secrets.ACR_USERNAME }}
+        acrPassword: ${{ secrets.ACR_PASSWORD }}
+        ingress: external
