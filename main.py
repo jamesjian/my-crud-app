@@ -1,6 +1,6 @@
 import os
 import contextlib
-import time  # <-- Add this import
+import time
 from fastapi import FastAPI, HTTPException
 import psycopg
 
@@ -8,8 +8,10 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 @contextlib.asynccontextmanager
 async def lifespan(app: FastAPI):
-    if DATABASE_URL:
-        # Retry connection 5 times with a 2-second delay
+    # If the database URL is missing, print a warning instead of crashing the container
+    if not DATABASE_URL:
+        print("WARNING: DATABASE_URL environment variable is not set. Database endpoints will fail.")
+    else:
         conn = None
         for i in range(5):
             try:
@@ -31,12 +33,13 @@ async def lifespan(app: FastAPI):
                     """)
                     conn.commit()
         else:
-            print("Could not connect to the database. Exiting.")
-            raise RuntimeError("Database connection failed permanently.")
+            print("Could not connect to the database.")
+            # Do not raise a RuntimeError here for toy projects so the container stays running
             
     yield
 
 app = FastAPI(lifespan=lifespan)
+
 
 # --- CRUD ENDPOINTS ---
 

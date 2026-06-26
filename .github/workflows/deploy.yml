@@ -31,3 +31,4 @@ jobs:
         acrUsername: ${{ secrets.ACR_USERNAME }}
         acrPassword: ${{ secrets.ACR_PASSWORD }}
         ingress: external
+        environmentVariables: DATABASE_URL=${{ secrets.DATABASE_URL }}
