@@ -27,4 +27,4 @@ jobs:
             # Tell Azure how to name the image inside your registry:
         imageToBuild: mycrudapp.azurecr.io/my-toy-crud-app:${{ github.sha }}
         # Set a deployment location (e.g. eastus, westeurope, australiaeast)
-        location: Australia Southeast
+        location: australiaeast
