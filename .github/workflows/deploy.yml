@@ -33,4 +33,4 @@ jobs:
         ingress: external
         targetPort: 8000                 # <-- This forces Azure to route web traffic to your FastAPI 8000 port
         # Change this to a generic placeholder so GitHub stops trying to manage your database strings
-        environmentVariables: DATABASE_URL=postgresql://clouduser:SimpleAzurePassword2026@://azure.com
+        environmentVariables: DATABASE_URL=postgresql://clouduser:SimpleAzurePassword2026@my-toy-crud-db-server.postgres.database.azure.com:5432/postgres
