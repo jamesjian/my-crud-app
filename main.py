@@ -9,8 +9,8 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 @contextlib.asynccontextmanager
 async def lifespan(app: FastAPI):
     # If the database URL is missing, print a warning instead of crashing the container
-    if not DATABASE_URL:
-        print("WARNING: DATABASE_URL environment variable is not set. Database endpoints will fail.")
+    if not DATABASE_URL or "dummy" in DATABASE_URL:
+        print("CRITICAL: DATABASE_URL is not configured properly.")
     else:
         conn = None
         for i in range(5):
@@ -57,6 +57,10 @@ def create_item(name: str, description: str = None):
 
 @app.get("/items")
 def read_all_items():
+        # Defensive programming: Block execution if variable isn't injected properly
+    if not DATABASE_URL or "dummy" in DATABASE_URL:
+        raise HTTPException(status_code=500, detail="Database connection string is missing or unconfigured.")
+        
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
             cur.execute("SELECT id, name, description FROM items;")
